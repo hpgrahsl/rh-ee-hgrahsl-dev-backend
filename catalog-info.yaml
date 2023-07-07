@@ -1,0 +1,67 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: rh-ee-hgrahsl-dev-poi-backend-app-dev
+  annotations:
+    argocd/app-name: rh-ee-hgrahsl-dev-poi-backend-app-dev
+    backstage.io/kubernetes-id: rh-ee-hgrahsl-dev-poi-backend-app-dev
+    backstage.io/kubernetes-namespace: rh-ee-hgrahsl-dev
+    backstage.io/kubernetes-label-selector: 'app.kubernetes.io/instance=rh-ee-hgrahsl-dev-poi-backend-app-dev'
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: hpgrahsl/rh-ee-hgrahsl-dev-backend
+    janus-idp.io/tekton-enabled: 'true'
+  tags:
+    - java
+    - quarkus
+    - maven
+    - workshop
+  links:
+    - url: https://console-openshift-console.apps.sandbox-m3.1530.p1.openshiftapps.com/dev-pipelines/ns/rh-ee-hgrahsl-dev/
+      title: Pipelines
+      icon: web
+    - url: https://console-openshift-console.apps.sandbox-m3.1530.p1.openshiftapps.com/k8s/ns/rh-ee-hgrahsl-dev/deployments/rh-ee-hgrahsl-dev-poi-backend-app
+      title: Deployment
+      icon: web
+    - url: https://devspaces.apps.sandbox-m3.1530.p1.openshiftapps.com/#https://github.com/hpgrahsl/rh-ee-hgrahsl-dev-backend?che-editor=che-incubator/che-code/latest&devfilePath=.devfile-vscode.yaml
+      title: OpenShift Dev Spaces (VS Code)
+      icon: web
+spec:
+  type: service
+  lifecycle: production
+  owner: "me"
+  system: workshop-system-rh-ee-hgrahsl-dev
+  providesApis:
+    - backend-api-rh-ee-hgrahsl-dev
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: workshop-system-rh-ee-hgrahsl-dev
+  tags:
+    - backstage
+    - janus-idp
+    - openshift
+    - workshop
+    - rh-summit
+spec:
+  owner: "me"
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: backend-api-rh-ee-hgrahsl-dev
+  description: API surface used by workshop attendees to initialize and load parks data
+  links:
+    - url: http://rh-ee-hgrahsl-dev-poi-backend-app-rh-ee-hgrahsl-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/q/swagger-ui
+      title: Swagger UI
+      icon: web
+    - url: https://github.com/hpgrahsl/rh-ee-hgrahsl-dev-backend/tree/main/src/main/resources/META-INF/openapi.yaml
+      title: API Spec
+      icon: code
+spec:
+  type: openapi
+  lifecycle: production
+  owner: "me"
+  system: workshop-system-rh-ee-hgrahsl-dev
+  definition:
+    $text: https://github.com/hpgrahsl/rh-ee-hgrahsl-dev-backend/tree/main/src/main/resources/META-INF/openapi.yaml
